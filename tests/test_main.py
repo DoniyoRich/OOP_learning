@@ -1,4 +1,3 @@
-import src
 from src.main import Category, Product
 from unittest import mock
 
