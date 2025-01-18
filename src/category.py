@@ -17,6 +17,10 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(products)
 
+    def __str__(self):
+        """ Метод для пользовательского отображения информации по категории. """
+        return f"{self.name}, количество продуктов: {len(self.__products)} шт."
+
     def add_product(self, product: Product):
         """ Метод для добавления товара в список товаров. """
         self.__products.append(product)
@@ -28,6 +32,6 @@ class Category:
         products_ = []
         for prod in self.__products:
             # print(prod.name)
-            products_.append(f'{prod.name}, {prod.price} руб. Остаток: {prod.quantity} шт.\n')
+            products_.append(f'{str(prod)}\n')
 
         return products_

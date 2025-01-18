@@ -64,6 +64,18 @@ def test_add_product_to_category(category_notebooks, product_huawey):
     assert Category.product_count == 3
 
 
+def test_product_str(product_poco):
+    assert str(product_poco) == "POCO, 90000.0 руб. Остаток: 12 шт."
+
+
+def test_category_str(category_notebooks):
+    assert str(category_notebooks) == "Ноутбуки, количество продуктов: 2 шт."
+
+
+def test_product_add(product_samsung, product_huawey):
+    assert product_samsung + product_huawey == 1_032_000.0
+
+
 def test_main(capsys, out_main):
     main()
     captured = capsys.readouterr()
