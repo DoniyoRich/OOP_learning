@@ -1,5 +1,9 @@
-from src.main import Category, Product
+from itertools import product
 from unittest import mock
+
+from src.main import main
+from src.product import Product
+from src.category import Category
 
 
 def test_init_prod_samsung(product_samsung):
@@ -7,9 +11,10 @@ def test_init_prod_samsung(product_samsung):
     assert product_samsung.price == 120000.0
 
 
-def test_init_category_notebooks(category_notebooks):
+def test_init_category_notebooks(category_notebooks, notebook_asus, notebook_sony):
     assert category_notebooks.description == "Ультрабуки, планшеты"
-    assert category_notebooks.products == ["ASUS", "SONY"]
+    assert category_notebooks.products == ['ASUS, 86000.0 руб. Остаток: 54 шт.\n',
+                                           'SONY, 95000.0 руб. Остаток: 68 шт.\n']
     Category.category_count = 0
     Category.product_count = 0
 
@@ -21,51 +26,87 @@ def test_count_prods(product_samsung, product_poco, product_huawey):
     Category.product_count = 0
 
 
-def test_count_categories(category_notebooks, category_washing_mashines):
+def test_count_categories(category_notebooks, category_phones):
     assert Category.category_count == 2
+
+
+def test_new_product_and_price_getter(new_product_dict):
+    new_prod = Product.new_product(new_product_dict)
+    assert new_prod.name == 'NOVA S100 Ultra'
+    assert new_prod.description == '1024GB, Белый цвет, 1000MP камера'
+    assert new_prod.quantity == 3
+    assert new_prod.price == 200000.0
+
+
+def test_product_price_setter(new_product_dict):
+    prod = Product.new_product(new_product_dict)
+    prod.price = 125000.0
+    assert prod.price == 125000.0
     Category.category_count = 0
     Category.product_count = 0
 
+
+def test_product_wrong_price(new_product_dict, capsys):
+    prod = Product.new_product(new_product_dict)
+
+    prod.price = -20000.0
+    captured = capsys.readouterr()
+    assert prod.price == 200000.0
+    assert 'Цена не должна быть нулевая или отрицательная' in captured.out
+
+    prod.price = 0
+    captured = capsys.readouterr()
+    assert prod.price == 200000.0
+    assert 'Цена не должна быть нулевая или отрицательная' in captured.out
+
+
+def test_add_product_to_category(category_notebooks, product_huawey):
+    assert Category.category_count == 1
+    assert Category.product_count == 2
+    category_notebooks.add_product(product_huawey)
+    assert Category.product_count == 3
+
+
+# @patch(src.main.Category)
+# @patch(src.main.Product)
+def test_main(capsys, out_main):
+    main()
+    captured = capsys.readouterr()
+    assert out_main in captured.out
+
+
+"""
 def test_if_main():
     with mock.patch('__main__.__name__', '__main__'):
         product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
         product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
         product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
 
-        print(product1.name)
-        print(product1.description)
-        print(product1.price)
-        print(product1.quantity)
+        category1 = Category(
+            "Смартфоны",
+            "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
+            [product1, product2, product3]
+        )
 
-        print(product2.name)
-        print(product2.description)
-        print(product2.price)
-        print(product2.quantity)
-
-        print(product3.name)
-        print(product3.description)
-        print(product3.price)
-        print(product3.quantity)
-
-        category1 = Category("Смартфоны",
-                             "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
-                             [product1, product2, product3])
-
-        print(category1.name == "Смартфоны")
-        print(category1.description)
-        print(len(category1.products))
-        print(category1.category_count)
+        print(category1.products)
+        product4 = Product("55\" QLED 4K", "Фоновая подсветка", 123000.0, 7)
+        category1.add_product(product4)
+        print(category1.products)
         print(category1.product_count)
 
-        product4 = Product("55\" QLED 4K", "Фоновая подсветка", 123000.0, 7)
-        category2 = Category("Телевизоры",
-                             "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником",
-                             [product4])
+        new_product = Product.new_product(
+            {"name": "Samsung Galaxy S23 Ultra", "description": "256GB, Серый цвет, 200MP камера", "price": 180000.0,
+             "quantity": 5})
+        print(new_product.name)
+        print(new_product.description)
+        print(new_product.price)
+        print(new_product.quantity)
 
-        print(category2.name)
-        print(category2.description)
-        print(len(category2.products))
-        print(category2.products)
+        new_product.price = 800
+        print(new_product.price)
 
-        print(Category.category_count)
-        print(Category.product_count)
+        new_product.price = -100
+        print(new_product.price)
+        new_product.price = 0
+        print(new_product.price)
+"""

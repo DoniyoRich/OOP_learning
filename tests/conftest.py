@@ -1,6 +1,7 @@
 import pytest
 
-from src.main import Product, Category
+from src.product import Product
+from src.category import Category
 
 
 @pytest.fixture(scope="function")
@@ -19,15 +20,42 @@ def product_huawey():
 
 
 @pytest.fixture(scope="function")
-def category_notebooks():
-    yield Category("Ноутбуки", "Ультрабуки, планшеты", ["ASUS", "SONY"])
+def notebook_asus():
+    return Product("ASUS", "Ноутбуки ASUS", 86000.0, 54)
 
 
 @pytest.fixture(scope="function")
-def category_phones():
-    yield Category("Телефоны", "Современные телефоны", ["Samsung", "POCO", "HUAWEI"])
+def notebook_sony():
+    return Product("SONY", "Ноутбуки SONY", 95000.0, 68)
 
 
 @pytest.fixture(scope="function")
-def category_washing_mashines():
-    yield Category("Стиральные машины", "Современные стиралки", ["Indesit", "Midea", "LG"])
+def category_notebooks(notebook_asus, notebook_sony):
+    yield Category("Ноутбуки", "Ультрабуки, планшеты", [notebook_asus, notebook_sony])
+
+
+@pytest.fixture(scope="function")
+def category_phones(product_samsung, product_poco, product_huawey):
+    yield Category("Телефоны", "Современные телефоны", [product_samsung, product_poco, product_huawey])
+
+
+@pytest.fixture(scope="function")
+def new_product_dict():
+    return {"name": "NOVA S100 Ultra", "description": "1024GB, Белый цвет, 1000MP камера",
+            "price": 200000.0,
+            "quantity": 3}
+
+
+@pytest.fixture(scope="function")
+def out_main():
+    return "['Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\\n', 'Iphone 15, 210000.0 руб. Остаток: 8 шт.\\n', 'Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\\n']"
+
+
+# @pytest.fixture
+# def product():
+#     return Product
+#
+#
+# @pytest.fixture
+# def category():
+#     return Category
