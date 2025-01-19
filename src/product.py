@@ -18,7 +18,7 @@ class Product:
 
     def __add__(self, other):
         """ Получение информации об общей стоимости двух продуктов на складе. """
-        return self.__price * self.quantity + other.__price * other.quantity
+        return self.price * self.quantity + other.price * other.quantity
 
     @classmethod
     def new_product(cls, prod_dict):

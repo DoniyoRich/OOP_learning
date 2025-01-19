@@ -1,6 +1,5 @@
 from src.product import Product
 from src.category import Category
-from src.product_iterator import ProductIterator
 
 
 def main():
