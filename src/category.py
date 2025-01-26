@@ -1,5 +1,3 @@
-from itertools import product
-
 from src.product import Product
 
 
@@ -21,13 +19,16 @@ class Category:
 
     def __str__(self):
         """ Метод для пользовательского отображения информации по категории. """
-        # total = sum([prod.quantity for prod in self.__products])
         return f"{self.name}, количество продуктов: {sum([prod.quantity for prod in self.__products])} шт."
 
-    def add_product(self, product: Product):
+    def add_product(self, product_: Product):
         """ Метод для добавления товара в список товаров. """
-        self.__products.append(product)
-        Category.product_count += 1
+        if isinstance(product_, Product):
+            self.__products.append(product_)
+            Category.product_count += 1
+            return
+        else:
+            raise TypeError
 
     @property
     def products(self):

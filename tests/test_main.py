@@ -1,6 +1,10 @@
+import pytest
+
+from src.lawngrass import LawnGrass
 from src.main import main
 from src.product import Product
 from src.category import Category
+from src.smartphone import Smartphone
 
 
 def test_init_prod_samsung(product_samsung):
@@ -62,6 +66,28 @@ def test_add_product_to_category(category_notebooks, product_huawey):
     assert Category.product_count == 2
     category_notebooks.add_product(product_huawey)
     assert Category.product_count == 3
+
+
+def test_add_wrong_product_to_category(smartphone1, smartphone2):
+    category_smartphones = Category("Смартфоны", "Высокотехнологичные смартфоны", [smartphone1, smartphone2])
+
+    with pytest.raises(TypeError):
+        category_smartphones.add_product("Не смартфон")
+
+
+def test_add_different_products():
+    smartphone1 = Smartphone("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, 95.5,
+                             "S23 Ultra", 256, "Серый")
+    grass2 = LawnGrass("Газонная трава 2", "Выносливая трава", 450.0, 15, "США", "5 дней", "Темно-зеленый")
+    with pytest.raises(TypeError):
+        smartphone1 + grass2
+
+    with pytest.raises(TypeError):
+        grass2 + smartphone1
+
+
+# СЮДА ДОБАВИТЬ ТЕСТ НА НЕСООТВЕТСТВИЕ ПРОДУКТА КАТЕГОРИИ
+# def test_add_wrong_product_to_category(category_notebooks, product_huawey):
 
 
 def test_product_str(product_poco):

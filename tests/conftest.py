@@ -2,6 +2,7 @@ import pytest
 
 from src.product import Product
 from src.category import Category
+from src.smartphone import Smartphone
 
 
 @pytest.fixture(scope="function")
@@ -49,3 +50,14 @@ def new_product_dict():
 @pytest.fixture(scope="function")
 def out_main():
     return "['Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\\n', 'Iphone 15, 210000.0 руб. Остаток: 8 шт.\\n', 'Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\\n']"
+
+
+@pytest.fixture(scope="function")
+def smartphone1():
+    return Smartphone("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, 95.5,
+                      "S23 Ultra", 256, "Серый")
+
+
+@pytest.fixture(scope="function")
+def smartphone2():
+    return Smartphone("Iphone 15", "512GB, Gray space", 210000.0, 8, 98.2, "15", 512, "Gray space")
