@@ -5,6 +5,7 @@ from src.main import main
 from src.product import Product
 from src.category import Category
 from src.smartphone import Smartphone
+from tests.conftest import notebook_sony
 
 
 def test_init_prod_samsung(product_samsung):
@@ -86,10 +87,6 @@ def test_add_different_products():
         grass2 + smartphone1
 
 
-# СЮДА ДОБАВИТЬ ТЕСТ НА НЕСООТВЕТСТВИЕ ПРОДУКТА КАТЕГОРИИ
-# def test_add_wrong_product_to_category(category_notebooks, product_huawey):
-
-
 def test_product_str(product_poco):
     assert str(product_poco) == "POCO, 90000.0 руб. Остаток: 12 шт."
 
@@ -100,6 +97,12 @@ def test_category_str(category_notebooks):
 
 def test_product_add(product_samsung, product_huawey):
     assert product_samsung + product_huawey == 1_032_000.0
+
+
+def test_mixin_repr(capsys):
+    prod_1 = Product("SONY", "Ноутбуки SONY", 95000.0, 68)
+    captured = capsys.readouterr()
+    assert "Product('SONY', 'Ноутбуки SONY', 95000.0, 68)" in captured.out
 
 
 def test_main(capsys, out_main):

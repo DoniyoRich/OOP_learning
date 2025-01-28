@@ -49,7 +49,7 @@ def new_product_dict():
 
 @pytest.fixture(scope="function")
 def out_main():
-    return "['Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\\n', 'Iphone 15, 210000.0 руб. Остаток: 8 шт.\\n', 'Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\\n']"
+    return "Product('Samsung Galaxy S23 Ultra', '256GB, Серый цвет, 200MP камера', 180000.0, 5)\nProduct('Iphone 15', '512GB, Gray space', 210000.0, 8)\nProduct('Xiaomi Redmi Note 11', '1024GB, Синий', 31000.0, 14)\n"
 
 
 @pytest.fixture(scope="function")

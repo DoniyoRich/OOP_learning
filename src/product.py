@@ -1,4 +1,8 @@
-class Product:
+from src.base_product import BaseProduct
+from src.mixin_log import MixinLog
+
+
+class Product(BaseProduct, MixinLog):
     """ Класс Продуктов. """
     name: str
     description: str
@@ -11,6 +15,7 @@ class Product:
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__repr__()
 
     def __str__(self):
         """ Метод для пользовательского отображения информации по продукту. """
