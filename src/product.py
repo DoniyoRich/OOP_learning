@@ -15,7 +15,7 @@ class Product(BaseProduct, MixinLog):
         self.description = description
         self.__price = price
         self.quantity = quantity
-        super().__repr__()
+        super().__init__()
 
     def __str__(self):
         """ Метод для пользовательского отображения информации по продукту. """
@@ -23,7 +23,7 @@ class Product(BaseProduct, MixinLog):
 
     def __add__(self, other):
         """ Получение информации об общей стоимости двух продуктов на складе. """
-        if type(self) == type(other):
+        if type(self) is type(other):
             return self.price * self.quantity + other.price * other.quantity
 
     @classmethod
