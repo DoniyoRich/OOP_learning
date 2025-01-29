@@ -5,7 +5,6 @@ from src.main import main
 from src.product import Product
 from src.category import Category
 from src.smartphone import Smartphone
-from tests.conftest import notebook_sony
 
 
 def test_init_prod_samsung(product_samsung):
@@ -13,7 +12,7 @@ def test_init_prod_samsung(product_samsung):
     assert product_samsung.price == 120000.0
 
 
-def test_init_category_notebooks(category_notebooks, notebook_asus, notebook_sony):
+def test_init_category_notebooks(category_notebooks, notebook_asus):
     assert category_notebooks.description == "Ультрабуки, планшеты"
     assert category_notebooks.products == ['ASUS, 86000.0 руб. Остаток: 54 шт.\n',
                                            'SONY, 95000.0 руб. Остаток: 68 шт.\n']
@@ -100,7 +99,7 @@ def test_product_add(product_samsung, product_huawey):
 
 
 def test_mixin_repr(capsys):
-    prod_1 = Product("SONY", "Ноутбуки SONY", 95000.0, 68)
+    Product("SONY", "Ноутбуки SONY", 95000.0, 68)
     captured = capsys.readouterr()
     assert "Product('SONY', 'Ноутбуки SONY', 95000.0, 68)" in captured.out
 
