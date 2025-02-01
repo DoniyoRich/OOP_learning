@@ -31,6 +31,21 @@ def notebook_sony():
 
 
 @pytest.fixture(scope="function")
+def notebook_sony_empty_amount():
+    return Product("SONY", "Ноутбуки SONY", 95000.0, 0)
+
+
+@pytest.fixture(scope="function")
+def notebook_sony_empty_price():
+    return Product("SONY", "Ноутбуки SONY", 0, 40)
+
+
+@pytest.fixture(scope="function")
+def notebook_asus_empty_price():
+    return Product("ASUS", "Ноутбуки ASUS", 0, 54)
+
+
+@pytest.fixture(scope="function")
 def category_notebooks(notebook_asus, notebook_sony):
     yield Category("Ноутбуки", "Ультрабуки, планшеты", [notebook_asus, notebook_sony])
 

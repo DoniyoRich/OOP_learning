@@ -104,6 +104,19 @@ def test_mixin_repr(capsys):
     assert "Product('SONY', 'Ноутбуки SONY', 95000.0, 68)" in captured.out
 
 
+def test_product_empty_amount():
+    with pytest.raises(ValueError):
+        Product("SONY", "Ноутбуки SONY", 95000.0, 0)
+
+
+def test_category_middle_price(category_notebooks):
+    assert category_notebooks.middle_price() == 90500.0
+
+
+def test_category_middle_price_empty_products():
+    assert Category("Ноутбуки", "Ультрабуки, планшеты", []).middle_price() == 0
+
+
 def test_main(capsys, out_main):
     main()
     captured = capsys.readouterr()
